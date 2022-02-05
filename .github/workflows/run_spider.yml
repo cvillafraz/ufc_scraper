@@ -1,0 +1,28 @@
+name: UFC Spider Workflow
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+
+jobs:
+  run_spider_job:
+    runs-on: ubuntu-latest
+    env:
+      API_KEY: ${{secrets.API_KEY}}
+
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v2 # Checkout the repository content to github runner.
+
+      - name: Setup Python Version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8 # Install the python version needed
+
+      - name: Install Python dependencies
+        uses: py-actions/py-dependency-install@v3
+        with:
+          path: "requirements.txt"
+
+      - name: Execute job script # Run scripts/run_job.py
+        run: python ufc_scraper/scripts/run_job.py
