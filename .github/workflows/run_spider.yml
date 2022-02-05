@@ -23,4 +23,4 @@ jobs:
           path: "requirements.txt"
 
       - name: Execute job script # Run scripts/run_job.py
-        run: python app.py
+        run: python ufc_spider/scripts/run_job.py
