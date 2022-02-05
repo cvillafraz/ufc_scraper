@@ -2,7 +2,7 @@ name: UFC Spider Workflow
 
 on:
   schedule:
-    - cron: "*0 0 * * 1"
+    - cron: "0 0 * * 1"
 
 jobs:
   run_spider_job:
