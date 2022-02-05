@@ -4,7 +4,7 @@ from scrapy.selector import Selector
 
 class UFCSpider(Spider):
     name = "ufc_spider"
-    start_urls = ["http://ufcstats.com/statistics/events/completed?page=2"]
+    start_urls = ["http://ufcstats.com/statistics/events/completed?page=all"]
     custom_settings = {
         "FEEDS": {
             "items.json": {
