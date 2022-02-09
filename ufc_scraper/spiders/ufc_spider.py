@@ -36,7 +36,7 @@ class UFCSpider(Spider):
         fights_xpath = res.xpath("//tr").getall()[1:]
         fights = []
 
-        for fight in fights_xpath:
+        for idx, fight in enumerate(fights_xpath):
             details = [
                 s.strip()
                 for s in Selector(text=fight).xpath("//p//text()").getall()
@@ -65,6 +65,7 @@ class UFCSpider(Spider):
                 "round": details[-2],
                 "time": details[-1],
                 "closure": details[0],
+                "is_main_event": True if idx == 0 else False,
             }
             fights.append(fight_details)
 
