@@ -46,6 +46,11 @@ class UFCSpider(Spider):
             if "draw" in details or "nc" in details:
                 details.pop(0)
 
+            # Check if fight has detailed method of finish
+            method_detail = None
+            if details[12] in ("KO/TKO", "SUB") and not details[13].isnumeric():
+                method_detail = details[13]
+
             fight_details = {
                 "fighter_1": details[1],
                 "fighter_2": details[2],
@@ -59,9 +64,7 @@ class UFCSpider(Spider):
                 "fighter_2_sub": details[10],
                 "weigh_class": details[11],
                 "method": details[12],
-                "method_detail": details[13]
-                if details[12] in ("KO/TKO", "SUB")
-                else None,
+                "method_detail": method_detail,
                 "round": details[-2],
                 "time": details[-1],
                 "closure": details[0],
