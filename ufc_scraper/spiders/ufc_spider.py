@@ -37,14 +37,25 @@ class UFCSpider(Spider):
         fights = []
 
         for idx, fight in enumerate(fights_xpath):
-            details = [
-                s.strip()
-                for s in Selector(text=fight).xpath("//p//text()").getall()
-                if len(s.strip()) > 0
-            ]
 
-            if "draw" in details or "nc" in details:
-                details.pop(0)
+            fights.append(self._parse_fight(idx, fight))
+
+        yield {
+            "event_name": event_name,
+            "event_date": event_date,
+            "event_location": event_location,
+            "fights": fights,
+        }
+
+    def _parse_fight(self, idx, fight):
+        details = [
+            s.strip()
+            for s in Selector(text=fight).xpath("//p//text()").getall()
+            if len(s.strip()) > 0
+        ]
+
+        if "draw" in details or "nc" in details:
+            details.pop(0)
 
             # Check if fight has detailed method of finish
             method_detail = None
@@ -70,11 +81,5 @@ class UFCSpider(Spider):
                 "closure": details[0],
                 "is_main_event": True if idx == 0 else False,
             }
-            fights.append(fight_details)
 
-        yield {
-            "event_name": event_name,
-            "event_date": event_date,
-            "event_location": event_location,
-            "fights": fights,
-        }
+            return fight_details
