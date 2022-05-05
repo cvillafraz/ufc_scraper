@@ -44,7 +44,7 @@ class UFCSpider(Spider):
             res: response object from the request made to the event page
 
         Yields:
-            dictionary containing the event data
+            Dictionary containing the event data
         """
 
         event_name = res.xpath("//h2//text()").getall()[1].strip()
@@ -73,7 +73,7 @@ class UFCSpider(Spider):
             fight (str): html string containing the fight data
 
         Returns:
-            dictionary containing the fight data
+            Dictionary containing the fight data
         """
 
         details = [
